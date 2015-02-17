@@ -220,4 +220,4 @@ app.get('/app/:name', function(req, res) {
     });
 });
 
-app.listen(3000);
+app.listen(config.port);

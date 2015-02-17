@@ -1,0 +1,6 @@
+{
+  "network":{
+    "extension":"local"  
+  },
+  "port":3000
+}

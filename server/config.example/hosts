@@ -1,0 +1,17 @@
+#http://blog.versioneye.com/2014/07/03/intro-to-ansible/
+#ansible -i hosts all -m ping
+[localhost]
+127.0.0.1
+
+[voldenuit]
+voldenuit[01:64].local
+
+[localhost:vars]
+ansible_ssh_user=gabrielstuff
+ansible_ssh_pass=
+ansible_sudo_pass=
+
+[voldenuit:vars]
+ansible_ssh_user=pi
+ansible_ssh_pass=
+ansible_sudo_pass=
