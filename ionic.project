@@ -1,0 +1,13 @@
+{
+  "name": "fechty",
+  "app_id": "",
+  "gulpStartupTasks": [
+    "sass",
+    "watch",
+    "run-server"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}
