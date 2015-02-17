@@ -8,9 +8,15 @@ var express = require('express'),
   sshConf = require('./config/user.json'),
   config = require('./config/config.json'),
   //hostPath = path.join(__dirname,'config','hosts');
-hostPath = "/Users/gabrielstuff/Sources/node/fechty/server/config/hosts",
-  sshClient = require('ssh2').Client;
+  hostPath = "/Users/gabrielstuff/Sources/node/fechty/server/config/hosts",
+  sshClient = require('ssh2').Client,
+  ping = require('jjg-ping');
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 var parseResult = function(result, applicationName) {
   var splitted = result.output.split('>>'),
@@ -36,6 +42,39 @@ var parseResult = function(result, applicationName) {
   return res;
 };
 
+var pingpingping = function(domain, req, res) {
+  return new Promise(function(resolve, reject) {
+    ping.system.ping(domain, function(latency, status) {
+      if (status) {
+        // Host is reachable/up. Latency should have a value.
+        console.log(domain + ' is reachable (' + latency + ' ms ping).');
+        res
+          .status(200)
+          .json({
+            'data': {
+              latency: latency
+            },
+            error: ''
+          });
+
+        // this will throw, x does not exist
+        resolve(domain);
+
+      } else {
+        // Host is down. Latency should be 0.
+        console.log(domain + 'Google is unreachable.');
+        res
+          .status(404)
+          .json({
+            'err': 'not reachable',
+            'data': ''
+          });
+        reject(domain);
+      }
+    });
+  });
+}
+
 var sshExec = function(command, machineName, res, req) {
   var connectionInfos = {
       host: machineName,
@@ -51,7 +90,9 @@ var sshExec = function(command, machineName, res, req) {
   var conn = new sshClient();
   conn.on('ready', function() {
       console.log('Client :: ready');
-      conn.exec(command, { pty: true }, function(err, stream) {
+      conn.exec(command, {
+        pty: true
+      }, function(err, stream) {
         if (err) throw err;
         stream
           .on('close', function(code, signal) {
@@ -126,7 +167,10 @@ app.get('/test/:host', function(req, res) {
     });
 });
 
+
+
 app.get('/ping', function(req, res) {
+  console.log('call ping');
   var pingCommand = new Ansible.AdHoc()
     .inventory(hostPath)
     .hosts('voldenuit')
@@ -159,10 +203,22 @@ app.get('/reset/:name', function(req, res) {
   sshExec('sudo /sbin/reboot -l', req.params.name, res, req);
 });
 
+app.get('/ping/:name', function(req, res) {
+  console.log('call ping:' + req.params.name);
+  pingpingping(req.params.name, req, res)
+    .then(function(data) {
+      console.log('finish: ', data);
+    }, function(err) {
+      console.log('err: ', err);
+    }).catch(function(error) {
+      console.log('oh no', error);
+    });
+});
+
 app.get('/rename/:name/:newname', function(req, res) {
   console.log(req.params.name);
   console.log(req.params.newname);
-  sshExec("sudo sed -i 's/"+req.params.name+"/"+req.params.newname+"/' /etc/hosts /etc/hostname; sudo reboot", req.params.name+'.'+config.network.extension, res, req);
+  sshExec("sudo sed -i 's/" + req.params.name + "/" + req.params.newname + "/' /etc/hosts /etc/hostname; sudo reboot", req.params.name + '.' + config.network.extension, res, req);
 });
 
 app.get('/resetall', function(req, res) {
