@@ -7,16 +7,26 @@ var express = require('express'),
   }],
   sshConf = require('./config/user.json'),
   config = require('./config/config.json'),
+  hosts = require('./config/hosts.json'),
   //hostPath = path.join(__dirname,'config','hosts');
   hostPath = "/Users/gabrielstuff/Sources/node/fechty/server/config/hosts",
   sshClient = require('ssh2').Client,
   ping = require('jjg-ping');
+  console.log(hosts);
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+var zeroPad = function(number, length) {
+    var my_string = '' + number;
+    while (my_string.length < length) {
+        my_string = '0' + my_string;
+    }
+    return my_string;
+}
 
 var parseResult = function(result, applicationName) {
   var splitted = result.output.split('>>'),
@@ -44,31 +54,34 @@ var parseResult = function(result, applicationName) {
 
 var pingpingping = function(domain, req, res) {
   return new Promise(function(resolve, reject) {
+    console.log(domain);
     ping.system.ping(domain, function(latency, status) {
       if (status) {
         // Host is reachable/up. Latency should have a value.
         console.log(domain + ' is reachable (' + latency + ' ms ping).');
-        res
+        if(res !== undefined){
+          res
           .status(200)
           .json({
             'data': {
               latency: latency
             },
             error: ''
-          });
-
+          });  
+        }
         // this will throw, x does not exist
         resolve(domain);
-
       } else {
         // Host is down. Latency should be 0.
-        console.log(domain + 'Google is unreachable.');
-        res
-          .status(404)
-          .json({
-            'err': 'not reachable',
-            'data': ''
-          });
+        console.log(domain + ' is unreachable.');
+        if(res !== undefined){
+          res
+            .status(404)
+            .json({
+              'err': 'not reachable',
+              'data': ''
+            });
+        }
         reject(domain);
       }
     });
@@ -203,6 +216,36 @@ app.get('/reset/:name', function(req, res) {
   sshExec('sudo /sbin/reboot -l', req.params.name, res, req);
 });
 
+app.get('/ping/all', function(req, res) {
+  console.log('call ping:' + '/ping/all');
+  hosts.list.forEach(function(hostValue, index) {
+    //console.log(hostValue);
+    if (hostValue.type === 'pattern') {
+      for (var i = 1; i <= hostValue.number; i++) {
+        console.log(hostValue.name + zeroPad(i, 2) + '.' + hostValue.extension);
+        pingpingping(hostValue.name + zeroPad(i, 2) + '.' + hostValue.extension)
+          .then(function(data) {
+            console.log('finish: ', data);
+          }, function(err) {
+            console.log('err: ', err);
+          }).catch(function(error) {
+            console.log('oh no', error);
+          });
+      }
+    } else {
+      pingpingping(hostValue.address)
+          .then(function(data) {
+            console.log('finish: ', data);
+          }, function(err) {
+            console.log('err: ', err);
+          }).catch(function(error) {
+            console.log('oh no', error);
+          });
+    }
+  });
+});
+
+
 app.get('/ping/:name', function(req, res) {
   console.log('call ping:' + req.params.name);
   pingpingping(req.params.name, req, res)
@@ -214,6 +257,7 @@ app.get('/ping/:name', function(req, res) {
       console.log('oh no', error);
     });
 });
+
 
 app.get('/rename/:name/:newname', function(req, res) {
   console.log(req.params.name);
