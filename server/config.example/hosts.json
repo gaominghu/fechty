@@ -1,4 +1,18 @@
 {
-  "name":"voldenuit",
-  "number":64
+  "list": [
+    {
+      "name": "voldenuit",
+      "number": 64,
+      "extension":"local",
+      "type":"pattern"
+    }, {
+      "name": "google.com",
+      "address": "google.com",
+      "type":"direct"
+    }, {
+      "name": "yahoo.com",
+      "address": "yahoo.com",
+      "type":"direct"
+    }
+  ]
 }
