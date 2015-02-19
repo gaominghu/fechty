@@ -16,7 +16,7 @@ After installation complete, cd to the cloned repo and then,
 
 `bower install`
 
-Do not forget to update your config value and rename the folder : `mv server/config.example server/config`
+Use the example config: `cp server/config.example server/config`
 
 Edit the host file for Ansible inventory.
 
