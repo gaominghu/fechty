@@ -11,8 +11,9 @@ var express = require('express'),
   //hostPath = path.join(__dirname,'config','hosts');
   hostPath = "/Users/gabrielstuff/Sources/node/fechty/server/config/hosts",
   sshClient = require('ssh2').Client,
-  ping = require('jjg-ping');
-  console.log(hosts);
+  ping = require('jjg-ping'),
+  hostNumber = 0;
+console.log(hosts);
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -20,12 +21,24 @@ app.use(function(req, res, next) {
   next();
 });
 
-var zeroPad = function(number, length) {
-    var my_string = '' + number;
-    while (my_string.length < length) {
-        my_string = '0' + my_string;
+var init = function() {
+  hosts.list.forEach(function(hostValue, index) {
+    if (hostValue.type === 'pattern') {
+      hostNumber += hostValue.number;
+    } else {
+      hostNumber++;
     }
-    return my_string;
+  });
+}
+
+init();
+
+var zeroPad = function(number, length) {
+  var my_string = '' + number;
+  while (my_string.length < length) {
+    my_string = '0' + my_string;
+  }
+  return my_string;
 }
 
 var parseResult = function(result, applicationName) {
@@ -54,35 +67,41 @@ var parseResult = function(result, applicationName) {
 
 var pingpingping = function(domain, req, res) {
   return new Promise(function(resolve, reject) {
-    console.log(domain);
     ping.system.ping(domain, function(latency, status) {
       if (status) {
         // Host is reachable/up. Latency should have a value.
         console.log(domain + ' is reachable (' + latency + ' ms ping).');
-        if(res !== undefined){
+        var data = {
+          hostname: domain.replace('.' + config.network.extension, ''),
+          address: domain,
+          latency: latency
+        };
+        if (res !== undefined) {
           res
-          .status(200)
-          .json({
-            'data': {
-              latency: latency
-            },
-            error: ''
-          });  
+            .status(200)
+            .json({
+              'data': data,
+              error: ''
+            });
         }
-        // this will throw, x does not exist
-        resolve(domain);
+        resolve(data);
       } else {
         // Host is down. Latency should be 0.
         console.log(domain + ' is unreachable.');
-        if(res !== undefined){
+        var data = {
+          hostname: domain.replace('.' + config.network.extension, ''),
+          address: domain,
+          latency: -1
+        };
+        if (res !== undefined) {
           res
             .status(404)
             .json({
               'err': 'not reachable',
-              'data': ''
+              'data': data
             });
         }
-        reject(domain);
+        reject(data);
       }
     });
   });
@@ -216,31 +235,76 @@ app.get('/reset/:name', function(req, res) {
   sshExec('sudo /sbin/reboot -l', req.params.name, res, req);
 });
 
+app.get('/hosts', function(req, res) {
+  var hostList = [];
+  //Could be optimized, make the list at startup.
+
+  hosts.list.forEach(function(hostValue, index) {
+    if (hostValue.type === 'pattern') {
+      for (var i = 1; i <= hostValue.number; i++) {
+        hostList.push({
+          hostname: hostValue.name + zeroPad(i, 2),
+          address: hostValue.name + zeroPad(i, 2) + '.' + hostValue.extension
+        });
+      }
+    } else {
+      hostList.push({
+        hostname: hostValue.name,
+        address: hostValue.address
+      });
+    }
+  });
+  res
+    .status(200)
+    .json({
+      data: hostList,
+      err: ''
+    });
+});
+
 app.get('/ping/all', function(req, res) {
+  var response = [];
+
+  function addData(data) {
+    response.push(data);
+    if (response.length >= hostNumber) {
+      res
+        .status(200)
+        .json({
+          data: response,
+          err: ''
+        });
+    }
+  }
+
   console.log('call ping:' + '/ping/all');
   hosts.list.forEach(function(hostValue, index) {
     //console.log(hostValue);
     if (hostValue.type === 'pattern') {
       for (var i = 1; i <= hostValue.number; i++) {
-        console.log(hostValue.name + zeroPad(i, 2) + '.' + hostValue.extension);
+        //console.log(hostValue.name + zeroPad(i, 2) + '.' + hostValue.extension);
         pingpingping(hostValue.name + zeroPad(i, 2) + '.' + hostValue.extension)
           .then(function(data) {
             console.log('finish: ', data);
+            addData(data);
           }, function(err) {
             console.log('err: ', err);
+            addData(err);
           }).catch(function(error) {
             console.log('oh no', error);
           });
       }
     } else {
       pingpingping(hostValue.address)
-          .then(function(data) {
-            console.log('finish: ', data);
-          }, function(err) {
-            console.log('err: ', err);
-          }).catch(function(error) {
-            console.log('oh no', error);
-          });
+        .then(function(data) {
+          console.log('finish: ', data);
+          addData(data);
+        }, function(err) {
+          console.log('err: ', err);
+          addData(err);
+        }).catch(function(error) {
+          console.log('oh no', error);
+        });
     }
   });
 });
@@ -265,11 +329,11 @@ app.get('/rename/:name/:newname', function(req, res) {
   sshExec("sudo sed -i 's/" + req.params.name + "/" + req.params.newname + "/' /etc/hosts /etc/hostname; sudo reboot", req.params.name + '.' + config.network.extension, res, req);
 });
 
-app.get('/resetall', function(req, res) {
+app.get('/resetall/:name', function(req, res) {
   console.log('reboot all');
   var pingCommand = new Ansible.AdHoc()
     .inventory(hostPath)
-    .hosts('localhost')
+    .hosts(req.params.name)
     .module('shell')
     .args('/sbin/reboot -l')
     .asSudo()

@@ -5,7 +5,10 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+appURL = '//localhost:3000';
+zahoPort = '1337';
+ 
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngLodash'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -19,6 +22,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleDefault();
     }
   });
+  var url ='/img/icons.svg';
+  var c=new XMLHttpRequest(); c.open('GET', url, false); c.setRequestHeader('Content-Type', 'text/xml'); c.send();
+  document.body.insertBefore(c.responseXML.firstChild, document.body.firstChild)
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

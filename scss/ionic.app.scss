@@ -21,3 +21,55 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+span.state{
+  display: block;
+  width: 20px;
+  height: 20px;
+  float: left;
+  
+  &.up{
+    background-color: green;
+  }  
+  &.down{
+    background-color: red;
+  }
+}
+
+ion-list{
+  .list{
+    ion-item{
+      a{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        align-content: center;
+
+      }
+    }     
+  }
+}
+
+
+.iconmelon,
+.im {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: block;
+  fill: #525151;
+  &:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  &.up{
+    fill: green;
+  }
+  &.down{
+    fill: red;
+  }
+}

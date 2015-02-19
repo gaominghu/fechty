@@ -7014,3 +7014,38 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+span.state {
+  display: block;
+  width: 20px;
+  height: 20px;
+  float: left; }
+  span.state.up {
+    background-color: green; }
+  span.state.down {
+    background-color: red; }
+
+ion-list .list ion-item a {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  align-content: center; }
+
+.iconmelon, .im {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  display: block;
+  fill: #525151; }
+  .iconmelon:after, .im:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; }
+  .iconmelon.up, .im.up {
+    fill: green; }
+  .iconmelon.down, .im.down {
+    fill: red; }

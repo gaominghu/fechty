@@ -1,28 +1,32 @@
 <ion-view view-title="Dashboard">
+  <ion-header-bar align-title="left" class="bar-subheader">
+    <div class="buttons">
+      <button class="button" ng-click="doSomething()">Left Button</button>
+    </div>
+    <h1 class="title">Title!</h1>
+    <div class="buttons">
+      <button class="button">Right Button</button>
+    </div>
+  </ion-header-bar>
   <ion-content class="padding">
     <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
-        </div>
-      </div>
-    </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
-      </div>
+      <ion-list>
+        <ion-item class="item-avatar" ng-repeat="host in hosts" type="item-text-wrap" href="#/tab/name/{{host.hostname}}">
+          <span class="state {{isUp(host)}}"></span>
+          <div class="iconmelon {{isUpImg(host)}}">
+            <svg viewBox="0 0 32 32">
+              <use xlink:href="#cassette"></use>
+            </svg>
+          </div>
+          <div class="iconmelon {{deviceConnected(host)}}">
+            <svg viewBox="0 0 32 32">
+              <use xlink:href="#photo"></use>
+            </svg>
+          </div>
+          <h2>{{host.hostname}}</h2>
+          <h3>{{host.address}}</h3>
+        </ion-item>
+      </ion-list>
     </div>
   </ion-content>
 </ion-view>

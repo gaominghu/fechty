@@ -93,4 +93,23 @@ angular.module('starter.services', [])
       return friends[friendId];
     }
   }
+})
+
+.factory('Hosts', function($http) {
+  var hosts = [];
+  return {
+    all: function() {
+      return $http.get(appURL+'/hosts');
+    },
+    pingAll: function($scope) {
+      return $http.get(appURL+'/ping/all');
+    }
+  }
+})
+.factory('Camera', function($http) {
+  return {
+    status: function(cameraAddress) {
+      return $http.get('//'+cameraAddress+':'+zahoPort+'/api/status');
+    }
+  };
 });
