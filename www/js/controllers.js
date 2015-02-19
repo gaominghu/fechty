@@ -8,13 +8,13 @@ angular.module('starter.controllers', [])
     return '';
   };
   $scope.deviceConnected = function(host) {
-    if(host.camera !== undefined)
+    if (host.camera !== undefined)
       return (host.camera.camera.length > 0) ? 'up' : 'down';
     else
       return 'down';
   };
   $scope.iiStreaming = function(host) {
-    if(host.camera !== undefined)
+    if (host.camera !== undefined)
       return (host.camera.isStreaming) ? 'up' : 'down';
     else
       return 'down';
@@ -61,7 +61,30 @@ angular.module('starter.controllers', [])
       $scope.hosts = {};
     });
 
-    
+  $ionicModal.fromTemplateUrl('modal-rename.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  //Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
 
 })
 
