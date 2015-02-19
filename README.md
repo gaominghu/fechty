@@ -21,3 +21,6 @@ Use the example config: `cp server/config.example server/config`
 Edit the host file for Ansible inventory.
 
 
+## Run
+
+`ionic serve`
