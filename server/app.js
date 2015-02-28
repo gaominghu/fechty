@@ -13,6 +13,10 @@ var express = require('express'),
   sshClient = require('ssh2').Client,
   ping = require('jjg-ping'),
   hostNumber = 0;
+  workstationList = [],
+  Q = require('q'),
+  _ = require('lodash');
+
 console.log(hosts);
 
 app.use(function(req, res, next) {
@@ -29,6 +33,30 @@ var init = function() {
       hostNumber++;
     }
   });
+  var mdns = require('mdns');
+  var workstationService = mdns.createBrowser(mdns.tcp('workstation'));
+  workstationService.on('serviceUp', function(service) {
+    console.log("service up: ", service);
+    if(_.findWhere(workstationList,{basename: service.name}) === undefined){
+      workstationList.push({
+      name: service.host.replace('.local.', ''),
+      address: service.host.replace('local.', 'local'),
+      ip: service.addresses[0],
+      basename: service.name,
+      networkInterface: service.networkInterface
+    });
+    }
+  });
+  workstationService.on('serviceDown', function(service) {
+    console.log("service down: ", service);
+    workstationList = _.remove(workstationList, function(machine) {
+     return machine.basename === service.name; 
+    });
+  });
+  workstationService.on('error', function(err) {
+    console.log('MDNS - error: ', err);
+  })
+  workstationService.start();
 }
 
 init();
@@ -66,7 +94,7 @@ var parseResult = function(result, applicationName) {
 };
 
 var pingpingping = function(domain, req, res) {
-  return new Promise(function(resolve, reject) {
+  return Q.Promise(function(resolve, reject) {
     ping.system.ping(domain, function(latency, status) {
       if (status) {
         // Host is reachable/up. Latency should have a value.
@@ -260,6 +288,10 @@ app.get('/hosts', function(req, res) {
       data: hostList,
       err: ''
     });
+});
+
+app.get('/hosts/all', function(req, res) {
+
 });
 
 app.get('/ping/all', function(req, res) {

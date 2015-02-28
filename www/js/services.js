@@ -103,6 +103,9 @@ angular.module('starter.services', [])
     },
     pingAll: function($scope) {
       return $http.get(appURL+'/ping/all');
+    },
+    rename: function(oldname, newname){
+      return $http.get(appURL+'/rename/'+oldname+'/'+newname);
     }
   }
 })

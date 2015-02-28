@@ -10,8 +10,12 @@
     "gulp-rename": "^1.2.0",
     "gulp-sass": "^0.7.1",
     "jjg-ping": "soixantecircuits/JJG-Node-Ping",
+    "lodash": "^3.2.0",
+    "mdns": "^2.2.6",
     "node-ansible": "soixantecircuits/node-ansible",
+    "node-libnmap": "^0.1.12",
     "ping": "^0.1.9",
+    "q": "^1.1.2",
     "ssh2": "0.4.4"
   },
   "devDependencies": {

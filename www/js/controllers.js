@@ -61,11 +61,26 @@ angular.module('starter.controllers', [])
       $scope.hosts = {};
     });
 
-  $ionicModal.fromTemplateUrl('modal-rename.html', {
+  $ionicModal.fromTemplateUrl('/templates/modal-rename.html', {
     scope: $scope,
     animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.modal = modal;
+    $scope.rename = function(oldName, newName) {
+      console.log(oldName);
+      console.log(newName);
+      $scope.messageModal = 'Renaming...';
+      Hosts
+        .rename(oldName, newName)
+        .success(function(response){
+          $scope.messageModal = 'Renamde... wait for reboot';
+          $scope.modal.hide();
+        })
+        .error(function(data, status, headers, config) {
+          console.log('Can\'t rename: ', data);
+          $scope.messageModal = 'Fail to rename ' + oldName + ' to ' + newName +'. Reason: '+data.err.code;
+        });
+    };
   });
   $scope.openModal = function() {
     $scope.modal.show();

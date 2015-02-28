@@ -1,8 +1,22 @@
 <ion-modal-view>
-  <ion-header-bar>
+  <ion-header-bar class="bar-secondary">
     <h1 class="title">Rename photobox</h1>
+    <button class="button button-clear button-positive" ng-click="closeModal()">Cancel</button>
   </ion-header-bar>
   <ion-content>
-    Hello!
+    <form ng-submit="rename(oldName, newName)">
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="old name" ng-model="oldName">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="new name" ng-model="newName">
+      </label>
+    </div>
+    <div class="padding">
+      <button type="submit" class="button button-block button-positive">Rename</button>
+    </div>
+    <div>{{messageModal}}</div>
+  </form>
   </ion-content>
 </ion-modal-view>
