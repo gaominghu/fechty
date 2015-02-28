@@ -53,9 +53,7 @@ gulp.task('git-check', function(done) {
 
 gulp.task('run-server', function () {
     // Start the server at the beginning of the task 
-    server.run({
-        file: './server/app.js'
-    });
+    server.run(['./server/app.js']);
     
     // Restart the server when file changes 
     //gulp.watch(['app/**/*.html'], server.notify);
