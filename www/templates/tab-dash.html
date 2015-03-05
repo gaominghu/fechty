@@ -12,13 +12,10 @@
     <div class="list card">
       <ion-list>
         <ion-item class="item-label" type="item-text-wrap" >
-          <span class="state ">Status</span>
-          <span class="iconmelon">
-            Cassette
-          </span>
-          <span class="iconmelon">
-            Photo
-          </span>
+          <span class=" ">Status</span>
+          <span class="iconmelon">Cassette</span>
+          <span class="iconmelon">Camera</span>
+          <span class="iconmelon">Streaming</span>
           <span class="host-name">Host Name</span>
           <span class="host-address">Host Address</span>
         </ion-item>
@@ -34,6 +31,13 @@
           </div>
           <div class="col">
             <div class="iconmelon {{deviceConnected(host)}}">
+              <svg viewBox="0 0 32 32">
+                <use xlink:href="#photo"></use>
+              </svg>
+            </div>
+          </div>
+          <div class="col">
+            <div class="iconmelon {{isStreaming(host)}}">
               <svg viewBox="0 0 32 32">
                 <use xlink:href="#photo"></use>
               </svg>

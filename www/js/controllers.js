@@ -2,6 +2,9 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope, $ionicModal, Hosts, Camera, lodash) {
   $scope.isUp = function(host) {
+    if (host.latency === undefined){
+      return;
+    }
     return (host.latency >= 0) ? 'up' : 'down';
   };
   $scope.isUpImg = function(host) {
@@ -11,13 +14,13 @@ angular.module('starter.controllers', [])
     if (host.camera !== undefined)
       return (host.camera.camera.length > 0) ? 'up' : 'down';
     else
-      return 'down';
+      return;
   };
-  $scope.iiStreaming = function(host) {
+  $scope.isStreaming = function(host) {
     if (host.camera !== undefined)
       return (host.camera.isStreaming) ? 'up' : 'down';
     else
-      return 'down';
+      return;
   };
 
   Hosts.all().success(function(response) {

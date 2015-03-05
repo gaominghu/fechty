@@ -7022,7 +7022,8 @@ span.state {
   display: block;
   width: 20px;
   height: 20px;
-  float: left; }
+  float: left;
+  background-color: gray; }
   span.state.up {
     background-color: green; }
   span.state.down {
