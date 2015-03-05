@@ -109,6 +109,9 @@ angular.module('starter.services', [])
     },
     reboot: function(hostname){
       return $http.get(appURL+'/reset/'+hostname);
+    },
+    rebootAll: function(hostname){
+      return $http.get(appURL+'/resetall');
     }
 
   }

@@ -116,6 +116,17 @@ angular.module('starter.controllers', [])
           console.log('Can\'t reboot: ', data);
         });
     };
+
+    $scope.rebootAll = function(){
+      Hosts
+        .rebootAll()
+        .success(function(response){
+          console.log("reboot succeed");
+        })
+        .error(function(data, status, headers, config) {
+          console.log('Can\'t reboot: ', data);
+        });
+    };
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {
