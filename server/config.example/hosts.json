@@ -14,5 +14,7 @@
       "address": "yahoo.com",
       "type":"direct"
     }
-  ]
+  ],
+  "hostname": "/Users/tommy/Development/sites/fechty/server/config/hosts"
+
 }
