@@ -11,20 +11,45 @@
   <ion-content class="padding">
     <div class="list card">
       <ion-list>
+        <ion-item class="item-label" type="item-text-wrap" >
+          <span class="state ">Status</span>
+          <span class="iconmelon">
+            Cassette
+          </span>
+          <span class="iconmelon">
+            Photo
+          </span>
+          <span class="host-name">Host Name</span>
+          <span class="host-address">Host Address</span>
+        </ion-item>
         <ion-item class="item-avatar" ng-repeat="host in hosts" type="item-text-wrap" href="#/tab/name/{{host.hostname}}">
-          <span class="state {{isUp(host)}}"></span>
-          <div class="iconmelon {{isUpImg(host)}}">
-            <svg viewBox="0 0 32 32">
-              <use xlink:href="#cassette"></use>
-            </svg>
+          <div class="col">
+            <span class="state {{isUp(host)}}"></span></div>
+          <div class="col">
+            <div class="iconmelon {{isUpImg(host)}}">
+              <svg viewBox="0 0 32 32">
+                <use xlink:href="#cassette"></use>
+              </svg>
+            </div>
           </div>
-          <div class="iconmelon {{deviceConnected(host)}}">
-            <svg viewBox="0 0 32 32">
-              <use xlink:href="#photo"></use>
-            </svg>
+          <div class="col">
+            <div class="iconmelon {{deviceConnected(host)}}">
+              <svg viewBox="0 0 32 32">
+                <use xlink:href="#photo"></use>
+              </svg>
+            </div>
           </div>
-          <h2>{{host.hostname}}</h2>
-          <h3>{{host.address}}</h3>
+          <div class="col">
+            <h2 class="host-name">{{host.hostname}}</h2>
+          </div>
+          <div class="col">
+            <h3 class="host-address">{{host.address}}</h3>
+          </div>
+          <div class="col">
+            <div class="buttons">
+              <button class="button" ng-click="reboot(host.address)">Reboot</button>
+            </div>
+          </div>
         </ion-item>
       </ion-list>
     </div>

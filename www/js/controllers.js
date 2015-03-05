@@ -101,6 +101,16 @@ angular.module('starter.controllers', [])
     // Execute action
   });
 
+    $scope.reboot = function(hostname){
+      Hosts
+        .reboot(hostname)
+        .success(function(response){
+          console.log("reboot succeed");
+        })
+        .error(function(data, status, headers, config) {
+          console.log('Can\'t reboot: ', data);
+        });
+    };
 })
 
 .controller('ChatsCtrl', function($scope, Chats) {

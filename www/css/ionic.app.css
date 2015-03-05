@@ -7015,6 +7015,9 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+button {
+  cursor: pointer; }
+
 span.state {
   display: block;
   width: 20px;
@@ -7025,12 +7028,26 @@ span.state {
   span.state.down {
     background-color: red; }
 
+.item-label {
+  padding-left: 20px; }
+  .item-label span {
+    display: inline-block;
+    width: 120px;
+    margin-right: 20px; }
+
 ion-list .list ion-item a {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   align-content: center; }
+ion-list .list ion-item .col {
+  display: inline-block;
+  width: 120px;
+  max-width: 120px;
+  margin-right: 20px; }
+ion-list .list ion-item .item-content {
+  padding-left: 20px; }
 
 .iconmelon, .im {
   position: relative;

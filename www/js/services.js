@@ -106,7 +106,11 @@ angular.module('starter.services', [])
     },
     rename: function(oldname, newname){
       return $http.get(appURL+'/rename/'+oldname+'/'+newname);
+    },
+    reboot: function(hostname){
+      return $http.get(appURL+'/reset/'+hostname);
     }
+
   }
 })
 .factory('Camera', function($http) {

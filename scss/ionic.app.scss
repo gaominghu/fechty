@@ -21,20 +21,31 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+button{
+  cursor: pointer;
+}
 span.state{
   display: block;
   width: 20px;
   height: 20px;
   float: left;
-  
+
   &.up{
     background-color: green;
-  }  
+  }
   &.down{
     background-color: red;
   }
 }
 
+.item-label{
+  padding-left: 20px;
+  span{
+    display: inline-block;
+    width: 120px;
+    margin-right: 20px;
+  }
+}
 ion-list{
   .list{
     ion-item{
@@ -46,7 +57,19 @@ ion-list{
         align-content: center;
 
       }
-    }     
+      .col{
+        display: inline-block;
+        width: 120px;
+        max-width: 120px;
+        margin-right: 20px;
+      }
+      .item-content{
+        padding-left: 20px;
+        //        .state, .iconmelon, .host-name, .host-address{
+        //          margin-right: 30px;
+        //        }
+      }
+    }
   }
 }
 

@@ -260,7 +260,7 @@ app.get('/uptime/:name', function(req, res) {
 });
 
 app.get('/reset/:name', function(req, res) {
-  sshExec('sudo /sbin/reboot -l', req.params.name, res, req);
+  sshExec('sudo /sbin/reboot', req.params.name, res, req);
 });
 
 app.get('/hosts', function(req, res) {
