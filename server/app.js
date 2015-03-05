@@ -367,7 +367,7 @@ app.get('/resetall/:name', function(req, res) {
     .inventory(hostPath)
     .hosts(req.params.name)
     .module('shell')
-    .args('/sbin/reboot -l')
+    .args('/sbin/reboot')
     .asSudo()
     .exec()
     .then(function(result) {

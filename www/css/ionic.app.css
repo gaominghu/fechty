@@ -7022,7 +7022,7 @@ span.state {
   display: block;
   width: 20px;
   height: 20px;
-  float: left;
+  margin: 0 auto;
   background-color: gray; }
   span.state.up {
     background-color: green; }
@@ -7033,8 +7033,9 @@ span.state {
   padding-left: 20px; }
   .item-label span {
     display: inline-block;
-    width: 120px;
-    margin-right: 20px; }
+    width: 112px;
+    margin-right: 16px;
+    text-align: center; }
 
 ion-list .list ion-item a {
   display: flex;
@@ -7046,7 +7047,10 @@ ion-list .list ion-item .col {
   display: inline-block;
   width: 120px;
   max-width: 120px;
-  margin-right: 20px; }
+  margin-right: 20px;
+  text-align: center; }
+  ion-list .list ion-item .col > div {
+    margin: 0 auto; }
 ion-list .list ion-item .item-content {
   padding-left: 20px; }
 

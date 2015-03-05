@@ -1,8 +1,5 @@
 <ion-view view-title="Dashboard">
   <ion-header-bar align-title="left" class="bar-subheader">
-    <div class="buttons">
-      <button class="button" ng-click="openModal()">Open Modal</button>
-    </div>
     <h1 class="title">Title!</h1>
     <div class="buttons">
       <button class="button">Reboot all</button>
@@ -52,6 +49,11 @@
           <div class="col">
             <div class="buttons">
               <button class="button" ng-click="reboot(host.address)">Reboot</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="buttons">
+              <button class="button" ng-click="openModal(host.hostname)">Rename</button>
             </div>
           </div>
         </ion-item>

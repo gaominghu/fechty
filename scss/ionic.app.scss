@@ -28,7 +28,8 @@ span.state{
   display: block;
   width: 20px;
   height: 20px;
-  float: left;
+//  float: left;
+  margin: 0 auto;
   background-color: gray;
   &.up{
     background-color: green;
@@ -42,8 +43,9 @@ span.state{
   padding-left: 20px;
   span{
     display: inline-block;
-    width: 120px;
-    margin-right: 20px;
+    width: 112px;
+    margin-right: 16px;
+    text-align: center;
   }
 }
 ion-list{
@@ -62,6 +64,10 @@ ion-list{
         width: 120px;
         max-width: 120px;
         margin-right: 20px;
+        text-align: center;
+        &>div{
+          margin: 0 auto;
+        }
       }
       .item-content{
         padding-left: 20px;

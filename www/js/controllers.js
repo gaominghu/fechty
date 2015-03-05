@@ -69,6 +69,7 @@ angular.module('starter.controllers', [])
     animation: 'slide-in-up'
   }).then(function(modal) {
     $scope.modal = modal;
+
     $scope.rename = function(oldName, newName) {
       console.log(oldName);
       console.log(newName);
@@ -85,7 +86,8 @@ angular.module('starter.controllers', [])
         });
     };
   });
-  $scope.openModal = function() {
+  $scope.openModal = function(oldName) {
+    $scope.oldName = oldName;
     $scope.modal.show();
   };
   $scope.closeModal = function() {
