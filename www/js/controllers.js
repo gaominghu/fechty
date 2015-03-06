@@ -79,12 +79,14 @@ angular.module('starter.controllers', [])
             //    }
             //  });
             //});
+
             function removeExisteByProperty(arr1, arr2, prop) {
               lodash.each(arr2, function(arr2obj, index) {
-                var arr1obj = lodash.find(arr1, function(arr1obj) {
-                  return arr1obj[prop] === arr2obj[prop];
+                lodash.find(arr1, function(arr1obj) {
+                  if (arr1obj[prop] !== arr2obj[prop]){
+                    $scope.machineList.push(arr1obj);
+                  }
                 });
-                arr1obj ? console.log('exist') : $scope.machineList.push(arr2obj);
               });
             }
 
