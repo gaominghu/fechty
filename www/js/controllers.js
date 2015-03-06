@@ -81,17 +81,16 @@ angular.module('starter.controllers', [])
             //});
 
             function removeExisteByProperty(arr1, arr2, prop) {
-              lodash.each(arr2, function(arr2obj, index) {
-                lodash.find(arr1, function(arr1obj) {
-                  if (arr1obj[prop] !== arr2obj[prop]){
-                    $scope.machineList.push(arr1obj);
-                  }
+
+              lodash.each(arr1, function(arr1obj, index) {
+                var isExist = lodash.find(arr2, function(arr2obj) {
+                  return arr1obj[prop] === arr2obj[prop];
                 });
+                isExist ? console.log('exist') : $scope.machineList.push(arr1obj);
               });
             }
-            $scope.machineList = [];
+
             removeExisteByProperty(machineList, response.data, 'address');
-            console.log($scope.machineList);
 
             //angular.forEach(machineList, function(machine, key) {
             //  console.log(machine.address);
