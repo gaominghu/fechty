@@ -89,8 +89,9 @@ angular.module('starter.controllers', [])
                 });
               });
             }
-
+            $scope.machineList = [];
             removeExisteByProperty(machineList, response.data, 'address');
+            console.log($scope.machineList);
 
             //angular.forEach(machineList, function(machine, key) {
             //  console.log(machine.address);
