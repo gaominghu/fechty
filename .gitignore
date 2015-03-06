@@ -7,3 +7,4 @@ plugins/
 server/config/
 .idea
 .DS_Store
+www/js/config.js
