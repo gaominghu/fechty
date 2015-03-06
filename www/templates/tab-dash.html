@@ -1,6 +1,11 @@
 <ion-view view-title="Dashboard">
   <ion-header-bar align-title="left" class="bar-subheader">
-    <h1 class="title">Title!</h1>
+    <div>
+      Show disconnected host: <input type="checkbox" ng-model="disconnected.host" ng-change="">
+    </div>
+    <div>
+      Show disconnected camera: <input type="checkbox" ng-model="disconnected.camera" ng-change="">
+    </div>
     <div class="buttons">
       <button class="button" ng-click="rebootAll()">Reboot all</button>
     </div>
@@ -16,7 +21,7 @@
           <span class="host-name">Host Name</span>
           <span class="host-address">Host Address</span>
         </ion-item>
-        <ion-item class="item-avatar" ng-repeat="host in hosts" type="item-text-wrap" href="#/tab/name/{{host.hostname}}">
+        <ion-item ng-class="{'hide-host': disconnected.host, 'hide-camera': disconnected.camera}" class="item-avatar host-{{isUp(host)}} camera-{{deviceConnected(host)}}" ng-repeat="host in hosts" type="item-text-wrap" href="#/tab/name/{{host.hostname}}">
           <div class="col">
             <span class="state {{isUp(host)}}"></span></div>
           <div class="col">
@@ -41,10 +46,10 @@
             </div>
           </div>
           <div class="col">
-            <h2 class="host-name">{{host.hostname}}</h2>
+            <span class="host-name">{{host.hostname}}</span>
           </div>
           <div class="col">
-            <h3 class="host-address">{{host.address}}</h3>
+            <span class="host-address">{{host.address}}</span>
           </div>
           <div class="col">
             <div class="buttons">

@@ -1,7 +1,12 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope, $ionicModal, Hosts, Camera, lodash) {
-  $scope.isUp = function(host) {
+    //angular.element('.item-avatar').css('display', 'none');
+    $scope.disconnected = {
+      host : false,
+      camera : false
+    };
+    $scope.isUp = function(host) {
     if (host.latency === undefined){
       return;
     }
@@ -22,7 +27,6 @@ angular.module('starter.controllers', [])
     else
       return;
   };
-
   Hosts.all().success(function(response) {
       console.log(response.data);
       $scope.hosts = response.data;
