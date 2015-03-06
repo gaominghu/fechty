@@ -5,8 +5,8 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-appURL = '//localhost:3000';
-zahoPort = '1337';
+appURL = CONFIG.appURL;
+zahoPort = CONFIG.zahoPort;
  
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngLodash'])
 
