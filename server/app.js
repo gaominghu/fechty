@@ -36,7 +36,8 @@ var init = function() {
   var mdns = require('mdns');
   var workstationService = mdns.createBrowser(mdns.tcp('workstation'));
   workstationService.on('serviceUp', function(service) {
-    console.log("service up: ", service);
+    console.log(service.name);
+    //console.log("service up: ", service);
     if(_.findWhere(workstationList,{basename: service.name}) === undefined){
       workstationList.push({
       name: service.host.replace('.local.', ''),
@@ -227,7 +228,11 @@ app.get('/test/:host', function(req, res) {
     });
 });
 
-
+app.get('/workstationList', function(req, res){
+  res
+    .status(200)
+    .json(workstationList);
+});
 
 app.get('/ping', function(req, res) {
   console.log('call ping');

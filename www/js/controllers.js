@@ -6,7 +6,7 @@ angular.module('starter.controllers', [])
     $scope.connectedHost = 0;
     $scope.connectedCamera = 0;
     $scope.streaming = 0;
-
+    $scope.machineList = [];
     $scope.disconnected = {
       host : false,
       camera : false
@@ -32,6 +32,7 @@ angular.module('starter.controllers', [])
     else
       return;
   };
+
   Hosts.all().success(function(response) {
       console.log(response.data);
       $scope.hosts = response.data;
@@ -70,6 +71,29 @@ angular.module('starter.controllers', [])
                 });
             }
           });
+          Hosts.workstationList().success(function(machineList){
+            //angular.forEach(machineList, function(machine, key) {
+            //  angular.forEach(response.data, function(host, key) {
+            //    if (machine.address === host.address){
+            //      machineList.pop(machine);
+            //    }
+            //  });
+            //});
+            function removeExisteByProperty(arr1, arr2, prop) {
+              lodash.each(arr2, function(arr2obj, index) {
+                var arr1obj = lodash.find(arr1, function(arr1obj) {
+                  return arr1obj[prop] === arr2obj[prop];
+                });
+                arr1obj ? console.log('exist') : $scope.machineList.push(arr2obj);
+              });
+            }
+
+            removeExisteByProperty(machineList, response.data, 'address');
+
+            //angular.forEach(machineList, function(machine, key) {
+            //  console.log(machine.address);
+            //});
+          })
         })
         .error(function(data, status, headers, config) {
           console.log('error ping all');

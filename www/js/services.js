@@ -18,8 +18,10 @@ angular.module('starter.services', [])
     },
     rebootAll: function(hostname){
       return $http.get(appURL+'/resetall');
+    },
+    workstationList: function(){
+      return $http.get(appURL+'/workstationList');
     }
-
   }
 })
 .factory('Camera', function($http) {
