@@ -1,4 +1,4 @@
 var CONFIG = {
-  appURL : '//localhost:3000',
+  appURL : 'http://'+window.location.hostname + ':3000',
   zahoPort : '1337'
 };

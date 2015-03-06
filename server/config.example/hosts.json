@@ -7,6 +7,6 @@
       "type":"pattern"
     }
   ],
-  "hostname": "/Users/tommy/Development/sites/fechty/server/config/hosts"
+  "hostpath": "/Users/tommy/Development/sites/fechty/server/config/hosts"
 
 }
