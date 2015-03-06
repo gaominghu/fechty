@@ -7030,11 +7030,12 @@ span.state {
     background-color: red; }
 
 .item-label {
-  padding-left: 20px; }
+  padding-left: 20px;
+  line-height: 52px; }
   .item-label span {
     display: inline-block;
     width: 112px;
-    margin-right: 16px;
+    margin-right: 25px;
     text-align: center; }
 
 .bar-subheader div {
