@@ -300,7 +300,7 @@ app.get('/ping/all', function(req, res) {
 
   function addData(data) {
     response.push(data);
-    if (response.length >= hostNumber) {
+    if (response.length >= 50) {
       res
         .status(200)
         .json({

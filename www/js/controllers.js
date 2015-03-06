@@ -2,6 +2,11 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope, $ionicModal, Hosts, Camera, lodash) {
     //angular.element('.item-avatar').css('display', 'none');
+    $scope.hostNumber = 0;
+    $scope.connectedHost = 0;
+    $scope.connectedCamera = 0;
+    $scope.streaming = 0;
+
     $scope.disconnected = {
       host : false,
       camera : false
@@ -42,15 +47,22 @@ angular.module('starter.controllers', [])
               arr1obj ? lodash.extend(arr1obj, arr2obj) : arr1.push(arr2obj);
             });
           }
-
           mergeByProperty($scope.hosts, response.data, 'hostname');
+          $scope.hostNumber = $scope.hosts.length;
+          $scope.connectedHost = 0;
+          $scope.connectedCamera = 0;
+          $scope.streaming = 0;
           //console.log(lodash.merge($scope.hosts, response.data));
-          console.log($scope.hosts);
           lodash.each($scope.hosts, function(host, index) {
             if (host.latency >= 0) {
+              $scope.connectedHost ++;
               Camera
                 .status(host.address)
                 .success(function(response) {
+                  $scope.connectedCamera ++;
+                  if (response.isStreaming){
+                    $scope.streaming ++;
+                  }
                   $scope.hosts[index].camera = response;
                 })
                 .error(function(data, status, headers, config) {
