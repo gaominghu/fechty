@@ -1,15 +1,27 @@
 <ion-view view-title="Account">
   <ion-content>
-    <ion-list>
-      <ion-item class="item-toggle">
-        Enable Friends
-        <label class="toggle">
-          <input type="checkbox" ng-model="settings.enableFriends">
-          <div class="track">
-            <div class="handle"></div>
-          </div>
-        </label>
-      </ion-item>
-    </ion-list>
+    <div class="settings">
+      <ion-list>
+        <ion-item class="item-toggle">
+          Enable Friends
+          <label class="toggle">
+            <input type="checkbox" ng-model="settings.enableFriends">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </ion-item>
+      </ion-list>
+      <div class="danger-zone">
+        <h2>Danger Zone</h2>
+        <ion-list>
+          <ion-item class="item item-button-right">
+            Put dangerous option here
+            <button class="button button-assertive" ng-confirm-click="Are you sure to reboot all devices?" confirmed-click="rebootAll()">Reboot all</button>
+          </ion-item>
+          </ion-list>
+        </ion-list>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
