@@ -1,22 +1,45 @@
 <ion-view view-title="Dashboard">
   <ion-header-bar align-title="left" class="bar-subheader">
-    <h1 class="title">Title!</h1>
+    <div>
+      Show disconnected host: <input type="checkbox" ng-model="disconnected.host" ng-change="">
+    </div>
+    <div>
+      Show disconnected camera: <input type="checkbox" ng-model="disconnected.camera" ng-change="">
+    </div>
     <div class="buttons">
-      <button class="button">Reboot all</button>
+      <button class="button" ng-confirm-click="Are you sure to reboot all devices?" confirmed-click="rebootAll()">Reboot all</button>
     </div>
   </ion-header-bar>
   <ion-content class="padding">
     <div class="list card">
+      <h3>Unknown Machines: </h3>
+      <ion-list>
+        <ion-item ng-repeat="machine in machineList" type="item-text-wrap">
+          <div class="col">
+            <span class="host-name">{{machine.name}}</span>
+          </div>
+          <div class="col">
+            <span class="host-address">{{machine.address}}</span>
+          </div>
+          <div class="col">
+            <div class="buttons">
+              <button class="button" ng-click="openModal(machine.name)">Rename</button>
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div class="list card">
       <ion-list>
         <ion-item class="item-label" type="item-text-wrap" >
-          <span class=" ">Status</span>
+          <span class=" ">Status {{connectedHost}}/{{hostNumber}}</span>
           <span class="iconmelon">Cassette</span>
-          <span class="iconmelon">Camera</span>
-          <span class="iconmelon">Streaming</span>
+          <span class="iconmelon">Camera {{connectedCamera}}/{{hostNumber}}</span>
+          <span class="iconmelon">Streaming {{streaming}}/{{hostNumber}}</span>
           <span class="host-name">Host Name</span>
           <span class="host-address">Host Address</span>
         </ion-item>
-        <ion-item class="item-avatar" ng-repeat="host in hosts" type="item-text-wrap" href="#/tab/name/{{host.hostname}}">
+        <ion-item ng-class="{'hide-host': disconnected.host, 'hide-camera': disconnected.camera}" class="item-avatar host-{{isUp(host)}} camera-{{deviceConnected(host)}}" ng-repeat="host in hosts" type="item-text-wrap" href="#/tab/name/{{host.hostname}}">
           <div class="col">
             <span class="state {{isUp(host)}}"></span></div>
           <div class="col">
@@ -41,14 +64,14 @@
             </div>
           </div>
           <div class="col">
-            <h2 class="host-name">{{host.hostname}}</h2>
+            <span class="host-name">{{host.hostname}}</span>
           </div>
           <div class="col">
-            <h3 class="host-address">{{host.address}}</h3>
+            <span class="host-address">{{host.address}}</span>
           </div>
           <div class="col">
             <div class="buttons">
-              <button class="button" ng-click="reboot(host.address)">Reboot</button>
+              <button class="button" ng-confirm-click="Are you sure to reboot {{host.address}}?" confirmed-click="reboot(host.address)" >Reboot</button>
             </div>
           </div>
           <div class="col">

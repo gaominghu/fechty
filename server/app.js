@@ -9,7 +9,7 @@ var express = require('express'),
   config = require('./config/config.json'),
   hosts = require('./config/hosts.json'),
   //hostPath = path.join(__dirname,'config','hosts');
-  hostPath = "/Users/gabrielstuff/Sources/node/fechty/server/config/hosts",
+  hostPath = hosts.hostpath,
   sshClient = require('ssh2').Client,
   ping = require('jjg-ping'),
   hostNumber = 0;
@@ -36,7 +36,8 @@ var init = function() {
   var mdns = require('mdns');
   var workstationService = mdns.createBrowser(mdns.tcp('workstation'));
   workstationService.on('serviceUp', function(service) {
-    console.log("service up: ", service);
+    console.log(service.name);
+    //console.log("service up: ", service);
     if(_.findWhere(workstationList,{basename: service.name}) === undefined){
       workstationList.push({
       name: service.host.replace('.local.', ''),
@@ -227,7 +228,11 @@ app.get('/test/:host', function(req, res) {
     });
 });
 
-
+app.get('/workstationList', function(req, res){
+  res
+    .status(200)
+    .json(workstationList);
+});
 
 app.get('/ping', function(req, res) {
   console.log('call ping');
@@ -293,6 +298,7 @@ app.get('/hosts', function(req, res) {
 app.get('/hosts/all', function(req, res) {
 
 });
+
 
 app.get('/ping/all', function(req, res) {
   var response = [];
@@ -361,11 +367,11 @@ app.get('/rename/:name/:newname', function(req, res) {
   sshExec("sudo sed -i 's/" + req.params.name + "/" + req.params.newname + "/' /etc/hosts /etc/hostname; sudo reboot", req.params.name + '.' + config.network.extension, res, req);
 });
 
-app.get('/resetall/:name', function(req, res) {
+app.get('/resetall', function(req, res) {
   console.log('reboot all');
   var pingCommand = new Ansible.AdHoc()
     .inventory(hostPath)
-    .hosts(req.params.name)
+    .hosts('voldenuit')
     .module('shell')
     .args('/sbin/reboot')
     .asSudo()
@@ -391,7 +397,7 @@ app.get('/app/:name', function(req, res) {
   var applicationName = req.params.name,
     presence = new Ansible.AdHoc()
     .inventory(hostPath)
-    .hosts('localhost')
+    .hosts('voldenuit')
     .module('shell')
     .args(
       'pgrep -o "' + applicationName + '"'

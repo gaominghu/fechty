@@ -5,14 +5,8 @@
       "number": 64,
       "extension":"local",
       "type":"pattern"
-    }, {
-      "name": "google.com",
-      "address": "google.com",
-      "type":"direct"
-    }, {
-      "name": "yahoo.com",
-      "address": "yahoo.com",
-      "type":"direct"
     }
-  ]
+  ],
+  "hostpath": "/Users/tommy/Development/sites/fechty/server/config/hosts"
+
 }

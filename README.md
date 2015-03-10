@@ -14,9 +14,11 @@ After installation complete, cd to the cloned repo and then,
 
 `bower install`
 
-Use the example config: `cp server/config.example server/config`
+Use the example config for server-side: `cp server/config.example server/config`
+Use the example config for client-side: `cp front-config.example.js www/js/config.js`
 
 Edit the host file for Ansible inventory.
+Edit the hosts.json for the path to your hosts file.
 
 
 ## Run
