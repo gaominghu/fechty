@@ -32,6 +32,9 @@ angular.module('starter.controllers', [])
       else
         return;
     };
+    $scope.getHostNumber = function(host){
+      return host.hostname.match(/\d+/)[0]
+    };
 
     Hosts.all().success(function(response) {
       console.log(response.data);
