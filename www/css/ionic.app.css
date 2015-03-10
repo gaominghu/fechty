@@ -7029,7 +7029,7 @@ span.state {
   span.state.down {
     background-color: red; }
 
-.button {
+.button.close-all {
   color: white;
   background-color: red;
   font-weight: bold !important;
