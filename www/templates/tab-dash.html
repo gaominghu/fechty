@@ -32,6 +32,7 @@
     <div class="list card">
       <ion-list>
         <ion-item class="item-label" type="item-text-wrap" >
+          <span class=" ">Index</span>
           <span class=" ">Status {{connectedHost}}/{{hostNumber}}</span>
           <span class="iconmelon">Camera {{connectedCamera}}/{{hostNumber}}</span>
           <span class="iconmelon">Streaming {{streaming}}/{{hostNumber}}</span>
@@ -39,6 +40,9 @@
           <span class="host-address">Host Address</span>
         </ion-item>
         <ion-item ng-class="{'hide-host': disconnected.host, 'hide-camera': disconnected.camera}" class="item-avatar host-{{isUp(host)}} camera-{{deviceConnected(host)}}" ng-repeat="host in hosts" type="item-text-wrap" href="#/tab/name/{{host.hostname}}">
+          <div class="col">
+            {{getHostNumber(host)}}
+          </div>
           <div class="col">
             <span class="state {{isUp(host)}}"></span>
           </div>
