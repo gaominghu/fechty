@@ -169,7 +169,12 @@ angular.module('starter.controllers', [])
           console.log('Can\'t reboot: ', data);
         });
     };
-
+    $scope.init();
+  })
+  .controller('AccountCtrl', function($scope, Hosts) {
+    $scope.settings = {
+      enableFriends: true
+    };
     $scope.rebootAll = function() {
       Hosts
         .rebootAll()
@@ -179,11 +184,5 @@ angular.module('starter.controllers', [])
         .error(function(data, status, headers, config) {
           console.log('Can\'t reboot: ', data);
         });
-    };
-    $scope.init();
-  })
-  .controller('AccountCtrl', function($scope) {
-    $scope.settings = {
-      enableFriends: true
     };
   });
