@@ -33,7 +33,6 @@
       <ion-list>
         <ion-item class="item-label" type="item-text-wrap" >
           <span class=" ">Status {{connectedHost}}/{{hostNumber}}</span>
-          <span class="iconmelon">Cassette</span>
           <span class="iconmelon">Camera {{connectedCamera}}/{{hostNumber}}</span>
           <span class="iconmelon">Streaming {{streaming}}/{{hostNumber}}</span>
           <span class="host-name">Host Name</span>
@@ -41,23 +40,10 @@
         </ion-item>
         <ion-item ng-class="{'hide-host': disconnected.host, 'hide-camera': disconnected.camera}" class="item-avatar host-{{isUp(host)}} camera-{{deviceConnected(host)}}" ng-repeat="host in hosts" type="item-text-wrap" href="#/tab/name/{{host.hostname}}">
           <div class="col">
-            <span class="state {{isUp(host)}}"></span></div>
-          <div class="col">
-            <div class="iconmelon {{isUpImg(host)}}">
-              <svg viewBox="0 0 32 32">
-                <use xlink:href="#cassette"></use>
-              </svg>
-            </div>
+            <span class="state {{isUp(host)}}"></span>
           </div>
           <div class="col">
             <div class="iconmelon {{deviceConnected(host)}}">
-              <svg viewBox="0 0 32 32">
-                <use xlink:href="#photo"></use>
-              </svg>
-            </div>
-          </div>
-          <div class="col">
-            <div class="iconmelon {{isStreaming(host)}}">
               <svg viewBox="0 0 32 32">
                 <use xlink:href="#photo"></use>
               </svg>
