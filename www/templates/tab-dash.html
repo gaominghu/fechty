@@ -6,27 +6,11 @@
     <div>
       Show disconnected camera: <input type="checkbox" ng-model="disconnected.camera" ng-change="">
     </div>
-    <div class="buttons"></div>
+    <div class="buttons">
+<button class="button button-assertive" ng-confirm-click="Are you sure to reboot all devices?" confirmed-click="rebootAll()">Reboot all</button>
+    </div>
   </ion-header-bar>
   <ion-content class="padding">
-    <div class="list card">
-      <h3>Unknown Machines: </h3>
-      <ion-list>
-        <ion-item ng-repeat="machine in machineList" type="item-text-wrap">
-          <div class="col">
-            <span class="host-name">{{machine.name}}</span>
-          </div>
-          <div class="col">
-            <span class="host-address">{{machine.address}}</span>
-          </div>
-          <div class="col">
-            <div class="buttons">
-              <button class="button" ng-click="openModal(machine.name)">Rename</button>
-            </div>
-          </div>
-        </ion-item>
-      </ion-list>
-    </div>
     <div class="list card">
       <ion-list>
         <ion-item class="item-label" type="item-text-wrap" >

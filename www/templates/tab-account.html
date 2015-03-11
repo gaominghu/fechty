@@ -12,6 +12,20 @@
           </label>
         </ion-item>
       </ion-list>
+    <div class="list card">
+      <h3>Unknown Machines: </h3>
+      <ion-list>
+        <ion-item ng-repeat="machine in machineList" class="item item-button-right" type="item-text-wrap">
+          <div class="col">
+            <span class="host-name">{{machine.name}}</span>
+          </div>
+          <div class="col">
+            <span class="host-address">{{machine.address}}</span>
+          </div>
+            <button class="button button-calm" ng-click="openModal(machine.name)">Rename</button>
+        </ion-item>
+      </ion-list>
+    </div>
       <div class="danger-zone">
         <h2>Danger Zone</h2>
         <ion-list>

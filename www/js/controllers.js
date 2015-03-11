@@ -11,6 +11,9 @@ angular.module('starter.controllers', [])
       host: false,
       camera: false
     };
+    $scope.settings = {
+      enableFriends: true
+    };
     
     $scope.init = function(){
       $scope.refreshHost();
@@ -169,12 +172,6 @@ angular.module('starter.controllers', [])
           console.log('Can\'t reboot: ', data);
         });
     };
-    $scope.init();
-  })
-  .controller('AccountCtrl', function($scope, Hosts) {
-    $scope.settings = {
-      enableFriends: true
-    };
     $scope.rebootAll = function() {
       Hosts
         .rebootAll()
@@ -185,4 +182,5 @@ angular.module('starter.controllers', [])
           console.log('Can\'t reboot: ', data);
         });
     };
+    $scope.init();
   });
